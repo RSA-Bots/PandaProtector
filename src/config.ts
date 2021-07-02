@@ -12,6 +12,7 @@ export interface Config {
 	ghRepoPath: string;
 	verbosityLevel: string;
 	logChannelId: Snowflake;
+	qaChannelId: Snowflake;
 }
 
 export function isConfig(config: unknown): config is Config {
@@ -30,6 +31,7 @@ export function isConfig(config: unknown): config is Config {
 		typeof record["staffCategoryId"] === "string" &&
 		typeof record["ghRepoPath"] === "string" &&
 		typeof record["verbosityLevel"] === "string" &&
-		typeof record["logChannelId"] === "string"
+		typeof record["logChannelId"] === "string" &&
+		typeof record["qaChannelId"] === "string"
 	);
 }

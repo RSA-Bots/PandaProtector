@@ -1,4 +1,4 @@
-import { Client, Intents } from "discord.js";
+import { Client, Intents, TextChannel } from "discord.js";
 import exitHook from "exit-hook";
 import { readFileSync } from "fs";
 import { connect, connection, disconnect } from "mongoose";
@@ -119,6 +119,37 @@ function main(state: State, secrets: Secrets) {
 					)
 					.catch(console.error.bind(console));
 			}
+		}
+
+		//Handle QA
+		if (message.channel.id === config.qaChannelId) {
+			const original = message.content;
+			if (original.includes("title:") && original.includes("body:")) {
+				const content = /(.*)\n(.*)/g.exec(message.content)?.splice(1, 3);
+				if (content === undefined) return;
+				(message.channel as TextChannel).threads
+					.create({
+						name: content[0].substr(6),
+						autoArchiveDuration: 60,
+						reason: "Auto-generated QA channel",
+					})
+					.then(thread => {
+						thread
+							.send({ content: `Thread started by ${message.member?.displayName}` })
+							.catch(err => log(err as string, "warn"));
+						thread
+							.send({ content: content[1].substr(5) })
+							.then(() => {
+								thread.members.add(message.author).catch(err => log(err as string, "warn"));
+							})
+							.catch(err => log(err as string, "warn"));
+					})
+					.catch(err => log(err as string, "error"));
+			} else {
+				console.log(original.includes("title:"));
+				console.log(original.includes("body:"));
+			}
+			message.delete().catch(err => log(err as string, "warn"));
 		}
 	});
 
