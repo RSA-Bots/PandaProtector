@@ -44,7 +44,10 @@ const command: Command = {
 
 			if (!commandObject || !commandObject.hasPermission(interaction)) {
 				interaction
-					.reply("The command does not exist.", { ephemeral: command.shouldBeEphemeral(interaction) })
+					.reply({
+						content: "The command does not exist.",
+						ephemeral: command.shouldBeEphemeral(interaction),
+					})
 					.catch(console.error.bind(console));
 				return;
 			}

@@ -11,7 +11,7 @@ const command: Command = {
 		const start = Date.now();
 
 		interaction
-			.reply("Pinging...", { ephemeral: command.shouldBeEphemeral(interaction) })
+			.reply({ content: "Pinging...", ephemeral: command.shouldBeEphemeral(interaction) })
 			.then(() =>
 				interaction.editReply(
 					`Websocket heartbeat: ${getState().client.ws.ping}ms\nRoundtrip latency: ${Date.now() - start}ms`

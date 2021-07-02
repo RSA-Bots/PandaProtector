@@ -47,39 +47,41 @@ const command: Command = {
 					}).exec()
 				)
 				.then(logs =>
-					interaction.editReply(
-						new MessageEmbed({
-							fields: [
-								{
-									name: "User",
-									value: `<@${userObject.id}>`,
-									inline: true,
-								},
-								{
-									name: "Page",
-									value: `${pageNumber}`,
-									inline: true,
-								},
-								{
-									name: "Count",
-									value: `${countNumber}`,
-									inline: true,
-								},
-								{
-									name: `Command History`,
-									value:
-										`${logs
-											.map(entry => `\`${entry.command}\` ${entry.arguments.join(" ")}`)
-											.join("\n")}` || "None",
-								},
-							],
-						})
-					)
+					interaction.editReply({
+						embeds: [
+							new MessageEmbed({
+								fields: [
+									{
+										name: "User",
+										value: `<@${userObject.id}>`,
+										inline: true,
+									},
+									{
+										name: "Page",
+										value: `${pageNumber}`,
+										inline: true,
+									},
+									{
+										name: "Count",
+										value: `${countNumber}`,
+										inline: true,
+									},
+									{
+										name: `Command History`,
+										value:
+											`${logs
+												.map(entry => `\`${entry.command}\` ${entry.arguments.join(" ")}`)
+												.join("\n")}` || "None",
+									},
+								],
+							}),
+						],
+					})
 				)
 				.catch(console.error.bind(console));
 		} else {
 			interaction
-				.reply("Unknown user.", { ephemeral: command.shouldBeEphemeral(interaction) })
+				.reply({ content: "Unknown user.", ephemeral: command.shouldBeEphemeral(interaction) })
 				.catch(console.error.bind(console));
 		}
 	},

@@ -8,7 +8,8 @@
 		"build": "tsc",
 		"start": "node dist/index.js",
 		"test": "npm run build && npm start",
-		"check": "npm run build && npm run lint"
+		"check": "npm run build && npm run lint",
+		"checkAndFormat": "npx prettier . -w && npm run check"
 	},
 	"repository": {
 		"type": "git",
@@ -25,7 +26,7 @@
 		"@types/node": "^15.6.1",
 		"@types/node-fetch": "^2.5.10",
 		"discord-api-types": "^0.18.1",
-		"discord.js": "^13.0.0-dev.dec191aa1e4f22690285ca06c6eee7e6086b2930",
+		"discord.js": "^13.0.0-dev.fe6cc0c.1625184228",
 		"exit-hook": "^2.2.1",
 		"mongoose": "^5.12.11",
 		"node-fetch": "^2.6.1",

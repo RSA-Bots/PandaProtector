@@ -82,7 +82,7 @@ const command: Command = {
 							true
 						);
 
-						interaction.editReply(embedReply).catch(console.error.bind(console));
+						interaction.editReply({ embeds: [embedReply] }).catch(console.error.bind(console));
 					})
 					.catch(res => handleError(interaction, res as string));
 
@@ -134,7 +134,7 @@ const command: Command = {
 							embedReply.addField("Files", `\`\`\`${lines.join("\n")}\n\`\`\``, false);
 						}
 
-						interaction.editReply(embedReply).catch(console.error.bind(console));
+						interaction.editReply({ embeds: [embedReply] }).catch(console.error.bind(console));
 					})
 					.catch(res => handleError(interaction, res as string));
 
@@ -143,7 +143,7 @@ const command: Command = {
 				oauthFetch(`https://api.github.com/repos/${repo}/issues/${query}`)
 					.then(json => {
 						const modifiedEmbed = handleIssueOrPr(repo, json as Issue, embedReply);
-						interaction.editReply(modifiedEmbed).catch(console.error.bind(console));
+						interaction.editReply({ embeds: [modifiedEmbed] }).catch(console.error.bind(console));
 					})
 					.catch(res => handleError(interaction, res as string));
 
@@ -162,7 +162,7 @@ const command: Command = {
 							modifiedEmbed.addField("Merged by", generateGitHubUserLink(jsonData.merged_by), true);
 						}
 
-						interaction.editReply(modifiedEmbed).catch(console.error.bind(console));
+						interaction.editReply({ embeds: [modifiedEmbed] }).catch(console.error.bind(console));
 					})
 					.catch(res => handleError(interaction, res as string));
 
@@ -185,7 +185,7 @@ const command: Command = {
 						embedReply.addField("Watchers", String(jsonData.watchers_count), true);
 						embedReply.addField("Description", jsonData.description ?? "No description set.");
 
-						interaction.editReply(embedReply).catch(console.error.bind(console));
+						interaction.editReply({ embeds: [embedReply] }).catch(console.error.bind(console));
 					})
 					.catch(res => handleError(interaction, res as string));
 				break;

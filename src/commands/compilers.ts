@@ -63,10 +63,10 @@ const command: Command = {
 				// Discord embeds do not allow for more than 25 fields.
 				listEmbed.fields.splice(25);
 
-				interaction.reply(listEmbed).catch(console.error.bind(console));
+				interaction.reply({ embeds: [listEmbed] }).catch(console.error.bind(console));
 			})
 			.catch(err => {
-				interaction.reply(err, { allowedMentions: {} }).catch(console.error.bind(console));
+				interaction.reply({ content: err as string, allowedMentions: {} }).catch(console.error.bind(console));
 			});
 	},
 };

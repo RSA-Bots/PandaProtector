@@ -15,7 +15,8 @@ const command: Command = {
 		const days = Math.floor(uptime / 86400);
 
 		interaction
-			.reply(`Uptime: ${days} days ${hours}:${minutes}:${seconds}`, {
+			.reply({
+				content: `Uptime: ${days} days ${hours}:${minutes}:${seconds}`,
 				ephemeral: command.shouldBeEphemeral(interaction),
 			})
 			.catch(console.error.bind(console));

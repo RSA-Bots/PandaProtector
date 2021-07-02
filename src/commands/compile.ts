@@ -80,7 +80,8 @@ const command: Command = {
 
 		if (missingSource) {
 			interaction
-				.reply("Failed to parse previous message, did you send one?", {
+				.reply({
+					content: "Failed to parse previous message, did you send one?",
 					ephemeral: command.shouldBeEphemeral(interaction),
 				})
 				.catch(console.error.bind(console));
@@ -120,10 +121,12 @@ const command: Command = {
 					);
 				}
 
-				interaction.editReply(embed).catch(console.error.bind(console));
+				interaction.editReply({ embeds: [embed] }).catch(console.error.bind(console));
 			})
 			.catch(err => {
-				interaction.editReply(err, { allowedMentions: {} }).catch(console.error.bind(console));
+				interaction
+					.editReply({ content: err as string, allowedMentions: {} })
+					.catch(console.error.bind(console));
 			});
 	},
 };
